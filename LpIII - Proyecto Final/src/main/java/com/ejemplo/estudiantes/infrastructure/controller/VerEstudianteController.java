@@ -19,7 +19,7 @@ public class VerEstudianteController {
 
     private final VerEstudianteService verEstudianteService;
 
-    @GetMapping("/todos")
+    @GetMapping()
     public List<Estudiante> obtenerEstudiantes() {
         log.info("Se están pidiendo todos los estudiantes");
         return verEstudianteService.obtenerEstudiantes();

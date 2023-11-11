@@ -29,8 +29,15 @@ public class VerEstudianteService {
     }
 
     public Estudiante obtenerEstudiantePorId(Long id){
-        EstudianteEntity estudiante = verEstudianteRepository.findById(id).orElse(null);
-        Estudiante estudianteR = new Estudiante(estudiante.getId(), estudiante.getNombre(), estudiante.getApellido(), estudiante.getEdad());
-        return estudianteR;
+
+        return verEstudianteRepository.findById(id)
+                .map(estudianteEntity ->
+                        Estudiante.builder()
+                                .id(estudianteEntity.getId())
+                                .edad(estudianteEntity.getEdad())
+                                .nombre(estudianteEntity.getNombre())
+                                .apellido(estudianteEntity.getApellido())
+                                .build())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado..."));
     }
 }
