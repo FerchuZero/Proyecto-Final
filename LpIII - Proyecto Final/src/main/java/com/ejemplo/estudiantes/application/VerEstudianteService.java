@@ -1,6 +1,7 @@
 package com.ejemplo.estudiantes.application;
 
 import com.ejemplo.estudiantes.domain.Estudiante;
+import com.ejemplo.estudiantes.exeption.ResourceNotFoundExeption;
 import com.ejemplo.estudiantes.infrastructure.repository.VerEstudianteRepository;
 import com.ejemplo.estudiantes.infrastructure.repository.model.EstudianteEntity;
 
@@ -28,7 +29,7 @@ public class VerEstudianteService {
                 .collect(Collectors.toList());
     }
 
-    public Estudiante obtenerEstudiantePorId(Long id){
+    public Estudiante obtenerEstudiantePorId(long id){
 
         return verEstudianteRepository.findById(id)
                 .map(estudianteEntity ->
@@ -38,6 +39,6 @@ public class VerEstudianteService {
                                 .nombre(estudianteEntity.getNombre())
                                 .apellido(estudianteEntity.getApellido())
                                 .build())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado..."));
+                .orElseThrow(() -> new ResourceNotFoundExeption(String.format("Estudiante %d no encontrado", id)));
     }
 }
